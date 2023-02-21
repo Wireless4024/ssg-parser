@@ -7,9 +7,7 @@ This library allow to extract SSG state as json
 > Let's say this is js content from SSG
 
 ```js
-windows.__STATE__ = (function (a, b) {
-  return {hello: {bgga: b, dsa: a}, other: "..."}
-}(1, "qnlcpb"))
+windows.__STATE__ = (function(a,b){return{hello:{bgga:b,dsa:a},other:"..."}}(1,"qnlcpb"))
 ```
 
 > you can use it to extract `hello` field by using this code

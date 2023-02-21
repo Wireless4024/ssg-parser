@@ -214,7 +214,6 @@ fn _1_parse_1k(b: &mut Bencher) {
 	let js = build_js(5, 4, "hello", 2);
 	// js.len() is around 1k
 	let finder = make_finder_object(b"hello:");
-	println!("{} {}", js.len(), parse_object(js.as_bytes(), &finder, 256).unwrap().len());
 	b.iter(|| {
 		parse_object(js.as_bytes(), &finder, 256).unwrap();
 	})
@@ -225,7 +224,6 @@ fn _2_parse_10k(b: &mut Bencher) {
 	let js = build_js(15, 6, "hello", 2);
 	// js.len() is around 10k
 	let finder = make_finder_object(b"hello:");
-	println!("{} {}", js.len(), parse_object(js.as_bytes(), &finder, 256).unwrap().len());
 	b.iter(|| {
 		parse_object(js.as_bytes(), &finder, 256).unwrap();
 	})
@@ -236,7 +234,6 @@ fn _3_parse_200k(b: &mut Bencher) {
 	let js = build_js(30, 8, "hello", 3);
 	// js.len() is around 200k
 	let finder = make_finder_object(b"hello:");
-	println!("{} {}", js.len(), parse_object(js.as_bytes(), &finder, 256).unwrap().len());
 	b.iter(|| {
 		parse_object(js.as_bytes(), &finder, 256).unwrap();
 	})
@@ -247,7 +244,6 @@ fn _4_parse_2m(b: &mut Bencher) {
 	let js = build_js(60, 10, "hello", 3);
 	// js.len() is around 2m
 	let finder = make_finder_object(b"hello:");
-	println!("{} {}", js.len(), parse_object(js.as_bytes(), &finder, 256).unwrap().len());
 	b.iter(|| {
 		parse_object(js.as_bytes(), &finder, 256).unwrap();
 	})

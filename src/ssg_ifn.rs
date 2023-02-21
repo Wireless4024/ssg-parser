@@ -11,9 +11,17 @@ lazy_static! {
 	static ref ARGS_FINDER: Finder<'static> = Finder::new(b"}}(");
 }
 
+#[cfg(feature = "skip-whitespace")]
 macro_rules! no_space {
     ($e:expr) => {
 	    $e//nom::sequence::preceded(opt(is_a(&b" \t\r\n"[..])),$e)
+    };
+}
+
+#[cfg(not(feature = "skip-whitespace"))]
+macro_rules! no_space {
+    ($e:expr) => {
+	    nom::sequence::preceded(opt(is_a(&b" \t\r\n"[..])),$e)
     };
 }
 

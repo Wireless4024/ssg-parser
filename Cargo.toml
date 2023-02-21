@@ -11,6 +11,10 @@ memchr = "2.5"
 fxhash = "0.2"
 lazy_static = "1.4"
 
+[features]
+default = ["skip-whitespace"]
+skip-whitespace = []
+
 [dev-dependencies]
 rand = "0.8"
 

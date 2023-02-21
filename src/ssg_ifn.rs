@@ -19,7 +19,7 @@ macro_rules! no_space {
 
 pub fn parse_vars(input: &[u8]) -> Option<(FxHashMap<&[u8], &[u8]>, &[u8])> {
 	let (input, head) = parse_head(input).ok()?;
-	let arg_off = try_search(input, &ARGS_FINDER, 2)? + 2;
+	let arg_off = try_search(input, &ARGS_FINDER)? + 2;
 	let (_, tail) = parse_tail(&input[arg_off..], head.capacity()).ok()?;
 	if head.len() != tail.len() {
 		return None;
@@ -98,20 +98,17 @@ pub fn parse_object(input: &[u8], object: &Finder, capacity: usize) -> Option<Ve
 }
 
 #[inline]
-fn try_search(input: &[u8], finder: &Finder, min: usize) -> Option<usize> {
-	for i in (min..=6).rev() {
-		if let Some(res) = try_search_vals(i, input, finder) {
-			return Some(res);
+fn try_search(input: &[u8], finder: &Finder) -> Option<usize> {
+	let mut input = input;
+	for i in (2..=6).rev() {
+		let half = (i - 1) * (input.len() / i);
+		let val_buf = &input[half..];
+		if let Some(res) = finder.find(val_buf) {
+			return Some(res + half);
 		}
+		input = &input[..half];
 	}
-	None
-}
-
-#[inline]
-fn try_search_vals(limit: usize, input: &[u8], finder: &Finder) -> Option<usize> {
-	let half = (limit - 1) * (input.len() / limit);
-	let val_buf = &input[half..];
-	finder.find(val_buf).map(|it| it + half)
+	finder.find(input)
 }
 
 fn parse_head(input: &[u8]) -> IResult<&[u8], Vec<&[u8]>> {

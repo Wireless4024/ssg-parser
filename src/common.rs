@@ -4,9 +4,17 @@ use nom::error::{Error, ErrorKind};
 use nom::IResult;
 use nom::number::complete::recognize_float;
 
+#[cfg(feature = "skip-whitespace")]
 macro_rules! no_space {
     ($e:expr) => {
 	    $e//nom::sequence::preceded(opt(is_a(&b" \t\r\n"[..])),$e)
+    };
+}
+
+#[cfg(not(feature = "skip-whitespace"))]
+macro_rules! no_space {
+    ($e:expr) => {
+	    nom::sequence::preceded(nom::combinator::opt(is_a(&b" \t\r\n"[..])),$e)
     };
 }
 #[inline]
